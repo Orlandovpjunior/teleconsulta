@@ -134,9 +134,27 @@ export const userApi = {
     return response.data
   },
   
+  getAll: async (): Promise<User[]> => {
+    const response = await api.get('/users')
+    return response.data
+  },
+  
+  getById: async (id: number): Promise<User> => {
+    const response = await api.get(`/users/${id}`)
+    return response.data
+  },
+  
   updateUser: async (id: number, data: Partial<User>): Promise<User> => {
     const response = await api.put(`/users/${id}`, data)
     return response.data
+  },
+  
+  activate: async (id: number): Promise<void> => {
+    await api.patch(`/users/${id}/activate`)
+  },
+  
+  deactivate: async (id: number): Promise<void> => {
+    await api.patch(`/users/${id}/deactivate`)
   },
 }
 
@@ -158,9 +176,32 @@ export const planApi = {
     return response.data
   },
   
+  getAll: async (): Promise<Plan[]> => {
+    const response = await api.get('/plans')
+    return response.data
+  },
+  
   getById: async (id: number): Promise<Plan> => {
     const response = await api.get(`/plans/public/${id}`)
     return response.data
+  },
+  
+  create: async (data: CreatePlanRequest): Promise<Plan> => {
+    const response = await api.post('/plans', data)
+    return response.data
+  },
+  
+  update: async (id: number, data: CreatePlanRequest): Promise<Plan> => {
+    const response = await api.put(`/plans/${id}`, data)
+    return response.data
+  },
+  
+  activate: async (id: number): Promise<void> => {
+    await api.patch(`/plans/${id}/activate`)
+  },
+  
+  deactivate: async (id: number): Promise<void> => {
+    await api.patch(`/plans/${id}/deactivate`)
   },
   
   subscribe: async (planId: number): Promise<void> => {
@@ -170,6 +211,19 @@ export const planApi = {
   cancelSubscription: async (): Promise<void> => {
     await api.delete('/plans/subscription')
   },
+}
+
+export interface CreatePlanRequest {
+  name: string
+  description?: string
+  price: number
+  durationMonths?: number
+  maxAppointmentsMonth?: number
+  hasVideoCall?: boolean
+  hasChat?: boolean
+  hasPrescription?: boolean
+  hasMedicalCertificate?: boolean
+  features?: string[]
 }
 
 export const appointmentApi = {

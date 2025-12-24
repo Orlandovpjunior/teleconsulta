@@ -90,6 +90,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   Minhas Consultas
                 </Link>
               )}
+              {user?.role === 'ADMIN' && (
+                <Link
+                  href="/admin"
+                  className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100"
+                >
+                  Administração
+                </Link>
+              )}
               <div className="flex items-center space-x-4 ml-4 pl-4 border-l border-gray-200">
                 <div className="flex items-center space-x-2">
                   <User className="h-5 w-5 text-gray-400" />
@@ -163,6 +171,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Minhas Consultas
+                </Link>
+              )}
+              {user?.role === 'ADMIN' && (
+                <Link
+                  href="/admin"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Administração
                 </Link>
               )}
               <div className="pt-4 border-t border-gray-200">
